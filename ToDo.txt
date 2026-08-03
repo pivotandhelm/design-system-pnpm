@@ -1,3 +1,5 @@
+Full script for tsconfig.js
+
 {
   "extends": "./tsconfig.base.json",
   "compilerOptions": {
@@ -9,6 +11,10 @@
     "vitest.setup.ts"
   ],
   "references": [
-    { "path": "./packages/tokens" }
+    { "path": "./packages/tokens" },
+    { "path": "./packages/icons" },
+    { "path": "./packages/ui" }
   ]
 }
+
+// include each package path after the package's creation

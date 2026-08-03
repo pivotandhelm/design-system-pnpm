@@ -1,0 +1,26 @@
+
+{
+  "name": "@pivotandhelm/tokens",
+  "version": "0.0.0",
+  "type": "module",
+  "files": ["dist"],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./css": "./dist/tokens.css"
+  },
+  "scripts": {
+    "clean": "rimraf dist src/generated tsconfig.tsbuildinfo",
+    "generate": "style-dictionary build --config config.mjs",
+    "build": "pnpm clean && pnpm generate && tsc -b"
+  },
+  "devDependencies": {
+    "rimraf": "^6.0.0",
+    "style-dictionary": "^5.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
