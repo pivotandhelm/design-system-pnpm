@@ -1,0 +1,8 @@
+{
+  "files": [],
+  "references": [
+    { "path": "./packages/tokens" },
+    { "path": "./packages/icons" },
+    { "path": "./packages/ui" }
+  ]
+}
