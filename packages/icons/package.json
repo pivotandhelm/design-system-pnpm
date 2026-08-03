@@ -1,0 +1,32 @@
+{
+  "name": "@pivotandhelm/icons",
+  "version": "0.0.0",
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "clean": "rimraf dist tsconfig.tsbuildinfo",
+    "build": "pnpm clean && vite build && tsc -b"
+  },
+  "peerDependencies": {
+    "react": ">=18"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.18",
+    "@vitejs/plugin-react": "^6.0.5",
+    "react": "^19.2.8",
+    "rimraf": "^6.1.3",
+    "vite": "^8.2.0"
+  }
+}
