@@ -1,0 +1,21 @@
+[12:49:19.762] [INFO] [36mInitializing Storybook[39m
+[12:49:21.219] [DEBUG] Getting package.json info for /Users/PivotandHelm/Documents/_Pivot&HelmSystems_v1/Software/design-system-pnpm/package.json...
+[12:49:21.219] [INFO] Package manager: pnpm
+[12:49:21.221] [DEBUG] Getting CLI versions from NPM for storybook...
+[12:49:21.222] [DEBUG] Executing command: pnpm info storybook version
+[12:49:23.021] [WARN] This version is behind the latest release, which is: 10.5.7!
+You likely ran the init command through npx, which can use a locally cached version.
+
+To get the latest, please run: [36mnpx storybook@latest init[39m
+You may want to [36mCTRL+C[39m to stop, and run with the latest version instead.
+[12:49:23.024] [DEBUG] Executing command: pnpm config get minimumReleaseAge
+[12:49:24.097] [DEBUG] Using cached package.json for /Users/PivotandHelm/Documents/_Pivot&HelmSystems_v1/Software/design-system-pnpm/package.json...
+[12:49:24.099] [ERROR] Unable to initialize Storybook in this directory.
+
+Storybook couldn't detect a supported framework or configuration for your project. Make sure you're inside a framework project (e.g., React, Vue, Svelte, Angular, Next.js) and that its dependencies are installed.
+
+Tips:
+- Run init in an empty directory or create a new framework app first.
+- If this directory contains unrelated files, try a new directory for Storybook.
+[12:49:33.614] [PROMPT] Would you like to send anonymous crash reports to improve Storybook and fix bugs faster? {"choice":false}
+[12:49:33.617] [INFO] Storybook collects completely anonymous usage telemetry. We use it to shape Storybook's roadmap and prioritize features. You can learn more, including how to opt out, at https://storybook.js.org/telemetry
