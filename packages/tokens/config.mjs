@@ -1,13 +1,13 @@
 /** @type {import("style-dictionary").Config} */
-import StyleDictionary from 'style-dictionary';
+import StyleDictionary from "style-dictionary";
 
 /**
  * Recursively strips the Style Dictionary `{ value }` wrapper
  * so the generated TypeScript exports plain values.
  */
 function stripValues(obj) {
-  if (obj && typeof obj === 'object') {
-    if ('value' in obj) {
+  if (obj && typeof obj === "object") {
+    if ("value" in obj) {
       return obj.value;
     }
 
@@ -24,11 +24,11 @@ function stripValues(obj) {
  * structure Style Dictionary expects (`value`, `type`).
  */
 function transformTokenNode(node) {
-  if (!node || typeof node !== 'object') {
+  if (!node || typeof node !== "object") {
     return node;
   }
 
-  if ('$value' in node) {
+  if ("$value" in node) {
     const transformed = { value: node.$value };
 
     if (node.$type) {
@@ -40,23 +40,25 @@ function transformTokenNode(node) {
 
   return Object.fromEntries(
     Object.entries(node)
-      .filter(([key]) => key !== '$extensions')
+      .filter(([key]) => key !== "$extensions")
       .map(([key, value]) => [key, transformTokenNode(value)])
   );
 }
 
 function transformFigmaTokens(source) {
-  if (!source || typeof source !== 'object') {
+  if (!source || typeof source !== "object") {
     return source;
   }
 
-  const entries = Object.entries(source).filter(([key]) => !key.startsWith('$'));
+  const entries = Object.entries(source).filter(([key]) => !key.startsWith("$"));
 
   if (entries.length === 1) {
-    const [key, value] = entries[0];
+    const [, value] = entries[0];
 
-    if (value && typeof value === 'object' && !('$value' in value)) {
-      const nestedEntries = Object.entries(value).filter(([nestedKey]) => !nestedKey.startsWith('$'));
+    if (value && typeof value === "object" && !("$value" in value)) {
+      const nestedEntries = Object.entries(value).filter(
+        ([nestedKey]) => !nestedKey.startsWith("$")
+      );
 
       if (nestedEntries.length === 1) {
         return { [nestedEntries[0][0]]: transformTokenNode(nestedEntries[0][1]) };
@@ -66,8 +68,10 @@ function transformFigmaTokens(source) {
 
   return Object.fromEntries(
     entries.map(([key, value]) => {
-      if (value && typeof value === 'object' && !('$value' in value)) {
-        const nestedEntries = Object.entries(value).filter(([nestedKey]) => !nestedKey.startsWith('$'));
+      if (value && typeof value === "object" && !("$value" in value)) {
+        const nestedEntries = Object.entries(value).filter(
+          ([nestedKey]) => !nestedKey.startsWith("$")
+        );
 
         if (nestedEntries.length === 1) {
           return [nestedEntries[0][0], transformTokenNode(nestedEntries[0][1])];
@@ -80,19 +84,19 @@ function transformFigmaTokens(source) {
 }
 
 StyleDictionary.registerParser({
-  name: 'figma-tokens',
+  name: "figma-tokens",
   pattern: /\.json$/,
   parser: ({ contents }) => {
     const parsed = JSON.parse(contents);
     return transformFigmaTokens(parsed);
-  },
+  }
 });
 
 /**
  * TypeScript formatter
  */
 StyleDictionary.registerFormat({
-  name: 'typescript/values',
+  name: "typescript/values",
   format: ({ dictionary }) => {
     const values = stripValues(dictionary.tokens);
 
@@ -109,46 +113,46 @@ export type Tokens = typeof tokens;
 
 export default tokens;
 `;
-  },
+  }
 });
 
 export default {
   //usesDtcg: true,
   source: ["src/figma/figma-tokens.json"],
-  parsers: ['figma-tokens'],
+  parsers: ["figma-tokens"],
 
   platforms: {
     /**
      * TypeScript
      */
     ts: {
-      transformGroup: 'js',
-      buildPath: 'src/generated/',
+      transformGroup: "js",
+      buildPath: "src/generated/",
 
       files: [
         {
-          destination: 'tokens.ts',
-          format: 'typescript/values',
-        },
-      ],
+          destination: "tokens.ts",
+          format: "typescript/values"
+        }
+      ]
     },
 
     /**
      * CSS Custom Properties
      */
     css: {
-      transformGroup: 'css',
-      buildPath: 'dist/',
+      transformGroup: "css",
+      buildPath: "dist/",
 
       files: [
         {
-          destination: 'tokens.css',
-          format: 'css/variables',
+          destination: "tokens.css",
+          format: "css/variables",
           options: {
-            outputReferences: true,
-          },
-        },
-      ],
-    },
+            outputReferences: true
+          }
+        }
+      ]
+    }
   }
 };

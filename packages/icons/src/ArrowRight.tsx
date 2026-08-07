@@ -9,11 +9,7 @@ export function ArrowRight(props: SVGProps<SVGSVGElement>) {
       stroke="currentColor"
       {...props}
     >
-      <path
-        d="m9 18 6-6-6-6"
-        strokeWidth="2"
-        strokeLinecap="round"
-      />
+      <path d="m9 18 6-6-6-6" strokeWidth="2" strokeLinecap="round" />
     </svg>
   );
 }

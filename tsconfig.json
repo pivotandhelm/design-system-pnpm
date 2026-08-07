@@ -4,10 +4,7 @@
     "noEmit": true,
     "types": ["node"]
   },
-  "files": [
-    "vitest.config.ts",
-    "vitest.setup.ts"
-  ],
+  "files": ["vitest.config.ts", "vitest.setup.ts"],
   "references": [
     { "path": "./packages/tokens" },
     { "path": "./packages/icons" },
