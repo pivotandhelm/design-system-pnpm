@@ -1,21 +1,23 @@
 import type { StorybookConfig } from "@storybook/react-vite";
 
-import { dirname } from "path";
-
-import { fileURLToPath } from "url";
+import { dirname } from "node:path";
+import { fileURLToPath } from "node:url";
 
 /**
- * This function is used to resolve the absolute path of a package.
- * It is needed in projects that use Yarn PnP or are set up within a monorepo.
+ * Resolves the absolute path of an installed package.
+ *
+ * This supports monorepos and package-manager environments where Storybook
+ * cannot safely assume that an addon is installed at a conventional path.
  */
-function getAbsolutePath(value: string) {
+function getAbsolutePath(value: string): string {
   return dirname(fileURLToPath(import.meta.resolve(`${value}/package.json`)));
 }
+
 const config: StorybookConfig = {
   stories: [
-    "../../../packages/ui/src/**/*.stories.@(ts|tsx|mdx)",
-    "../../../packages/icons/src/**/*.stories.@(ts|tsx|mdx)"
+    "../../../packages/ui/src/**/*.stories.tsx"
   ],
+
   addons: [
     getAbsolutePath("@chromatic-com/storybook"),
     getAbsolutePath("@storybook/addon-vitest"),
@@ -23,6 +25,11 @@ const config: StorybookConfig = {
     getAbsolutePath("@storybook/addon-docs"),
     getAbsolutePath("@storybook/addon-mcp")
   ],
-  framework: getAbsolutePath("@storybook/react-vite")
+
+  framework: {
+    name: getAbsolutePath("@storybook/react-vite"),
+    options: {}
+  }
 };
+
 export default config;

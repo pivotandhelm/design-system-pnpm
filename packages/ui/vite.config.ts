@@ -12,7 +12,13 @@ export default defineConfig({
       cssFileName: "styles"
     },
     rollupOptions: {
-      external: ["react", "react-dom", "react/jsx-runtime", "@pivotandhelm/icons"]
+      external: [
+        "react", 
+        "react-dom", 
+        "react/jsx-runtime", 
+        "@pivotandhelm/icons",
+        "@pivotandhelm/tokens"
+      ]
     }
   }
 });

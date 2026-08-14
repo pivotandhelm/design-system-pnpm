@@ -1,58 +1,68 @@
 import react from "@vitejs/plugin-react";
-import { defineConfig } from "vitest/config";
-import { resolve } from "node:path";
-import path from "node:path";
-import { fileURLToPath } from "node:url";
 import { storybookTest } from "@storybook/addon-vitest/vitest-plugin";
 import { playwright } from "@vitest/browser-playwright";
-const dirname =
-  typeof __dirname !== "undefined"
-    ? __dirname
-    : path.dirname(fileURLToPath(import.meta.url));
+import { dirname, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
+import { defineConfig } from "vitest/config";
 
-// More info at: https://storybook.js.org/docs/next/writing-tests/integrations/vitest-addon
-const root = import.meta.dirname;
+const repositoryRoot = dirname(fileURLToPath(import.meta.url));
+
 export default defineConfig({
   plugins: [react()],
+
   test: {
     projects: [
       {
-        root: resolve(root, "packages/tokens"),
+        root: resolve(repositoryRoot, "packages/tokens"),
+
         test: {
           name: "tokens",
           environment: "node",
           include: ["src/**/*.test.ts"]
         }
       },
+
       {
-        root: resolve(root, "packages/icons"),
+        root: resolve(repositoryRoot, "packages/icons"),
+
         test: {
           name: "icons",
           environment: "jsdom",
-          setupFiles: [resolve(root, "vitest.setup.ts")],
+          setupFiles: [resolve(repositoryRoot, "vitest.setup.ts")],
           include: ["src/**/*.test.{ts,tsx}"]
         }
       },
+
       {
-        root: resolve(root, "packages/ui"),
+        root: resolve(repositoryRoot, "packages/ui"),
+
         test: {
           name: "ui",
           environment: "jsdom",
-          setupFiles: [resolve(root, "vitest.setup.ts")],
+          setupFiles: [resolve(repositoryRoot, "vitest.setup.ts")],
           include: ["src/**/*.test.{ts,tsx}"]
         }
       },
+
       {
         extends: true,
+
+        root: resolve(repositoryRoot, "apps/storybook"),
+
         plugins: [
-          // The plugin will run tests for the stories defined in your Storybook config
-          // See options at: https://storybook.js.org/docs/next/writing-tests/integrations/vitest-addon#storybooktest
           storybookTest({
-            configDir: path.join(dirname, "apps/storybook/.storybook")
+            configDir: resolve(repositoryRoot, "apps/storybook/.storybook"),
+            tags: {
+              include: ["test"],
+              exclude: [],
+              skip: [],
+            },
           })
         ],
+
         test: {
           name: "storybook",
+
           browser: {
             enabled: true,
             headless: true,
@@ -62,10 +72,11 @@ export default defineConfig({
                 browser: "chromium"
               }
             ]
-          }
+          },
         }
       }
     ],
+
     coverage: {
       reporter: ["text", "html"]
     }
