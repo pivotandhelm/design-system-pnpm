@@ -6,24 +6,44 @@ on:
     branches:
       - main
 
+permissions:
+  contents: read
+
 concurrency:
-  group: ci-${{ github.ref }}
+  group: ci-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
   validate:
+    name: Validate
     runs-on: ubuntu-latest
+    timeout-minutes: 30
 
     steps:
-      - uses: actions/checkout@v7
+      - name: Checkout repository
+        uses: actions/checkout@v7
 
-      - uses: pnpm/action-setup@v6
-
-      - uses: actions/setup-node@v6
+      - name: Set up pnpm and Node.js
+        uses: pnpm/setup@v2
         with:
-          node-version: 24
-          cache: pnpm
+          runtime: node@24
+          cache: true
+          cache-dependency-path: pnpm-lock.yaml
+          install: false
 
-      - run: pnpm install --frozen-lockfile
+      - name: Report tool versions
+        run: |
+          node --version
+          pnpm --version
 
-      - run: pnpm check
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Validate repository
+        run: pnpm check
+
+      - name: Install Playwright Chromium
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: Test Storybook stories
+        run: pnpm test:storybook

@@ -55,8 +55,8 @@ export default defineConfig({
             tags: {
               include: ["test"],
               exclude: [],
-              skip: [],
-            },
+              skip: []
+            }
           })
         ],
 
@@ -72,7 +72,7 @@ export default defineConfig({
                 browser: "chromium"
               }
             ]
-          },
+          }
         }
       }
     ],

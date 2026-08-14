@@ -13,9 +13,9 @@ export default defineConfig({
     },
     rollupOptions: {
       external: [
-        "react", 
-        "react-dom", 
-        "react/jsx-runtime", 
+        "react",
+        "react-dom",
+        "react/jsx-runtime",
         "@pivotandhelm/icons",
         "@pivotandhelm/tokens"
       ]
