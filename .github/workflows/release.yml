@@ -12,6 +12,7 @@ concurrency:
 permissions:
   contents: write
   pull-requests: write
+  id-token: write
 
 jobs:
   release:
@@ -45,6 +46,9 @@ jobs:
       - name: Test Storybook stories
         run: pnpm test:storybook
 
+      - name: Ensure trusted-publishing npm version
+        run: npm install --global npm@^11.5.1
+
       - name: Create release pull request or publish packages
         uses: changesets/action@v1
         with:
@@ -53,5 +57,3 @@ jobs:
           commit: "chore: release packages"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
