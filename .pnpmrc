@@ -1,0 +1,3 @@
+# Allow specific packages to run build scripts
+allowedScripts:
+  - esbuild
