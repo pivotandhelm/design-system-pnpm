@@ -1,6 +1,7 @@
 node_modules/
 
 packages/*/dist/
+packages/tokens/src/generated/
 apps/storybook/storybook-static/
 
 coverage/
