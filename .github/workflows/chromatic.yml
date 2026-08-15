@@ -38,7 +38,7 @@ jobs:
       - name: Install Playwright Chromium
         run: pnpm exec playwright install --with-deps chromium
 
-      - name: Build packages
+      - name: Build pnpm packages
         run: pnpm build
 
       - name: Validate repository
