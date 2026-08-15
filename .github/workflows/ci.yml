@@ -39,14 +39,14 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Install Playwright Chromium
+        run: pnpm exec playwright install --with-deps chromium
+
       - name: Build packages
         run: pnpm build
 
       - name: Validate repository
         run: pnpm check
-
-      - name: Install Playwright Chromium
-        run: pnpm exec playwright install --with-deps chromium
 
       - name: Test Storybook stories
         run: pnpm test:storybook
