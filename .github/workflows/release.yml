@@ -43,6 +43,9 @@ jobs:
       - name: Validate repository
         run: pnpm check
 
+      - name: Build tokens package
+        run: pnpm --filter @pivotandhelm/tokens build
+
       - name: Test Storybook stories
         run: pnpm test:storybook
 
